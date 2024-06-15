@@ -54,14 +54,14 @@ class Polygon:
         remaining_vertices = vertices.copy()
         current = remaining_vertices.pop()
         while len(remaining_vertices) > 0:
-            neighbors = current.get_neighbors()
+            neighbors = current.neighbors
             has_next1 = self._has_next(neighbors[0], current.facing, remaining_vertices)
             has_next2 = self._has_next(neighbors[1], current.facing, remaining_vertices)
             
             if has_next1:
-                current = Vertice(has_next1.point1.copy(), current.point2.copy(), current.facing)
+                current = Vertice(has_next1.p1.copy(), current.p2.copy(), current.facing)
             elif has_next2:
-                current = Vertice(current.point1.copy(), has_next2.point2.copy(), current.facing)
+                current = Vertice(current.p1.copy(), has_next2.p2.copy(), current.facing)
             else:
                 self.vertices.append(current)
                 current = remaining_vertices.pop()
@@ -70,7 +70,7 @@ class Polygon:
                     
     def set_vertices_and_neighbors(self, tiles : list[Tile], vertices : list[Vertice], height : int):
         for tile in tiles:
-            targets = tile.get_neighbors_coords()
+            targets = tile.neighbors_coords
             for vertice_num,target in enumerate(targets):
                 has_neighbor = self._has_neighbor(target, tiles)
                 if not has_neighbor:
@@ -99,7 +99,7 @@ class Polygon:
     def _has_next(self, target : Point, facing : str, remaining_vertices : list[Vertice]) -> bool|Vertice:
         for vertice in remaining_vertices:
             if vertice.facing == facing:
-                if vertice.point1.position == target.position or vertice.point2.position == target.position:
+                if vertice.p1.position == target.position or vertice.p2.position == target.position:
                     remaining_vertices.remove(vertice)
                     return vertice
         return False

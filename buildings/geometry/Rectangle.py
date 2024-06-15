@@ -3,21 +3,22 @@ from buildings.geometry.Point import Point
 
 class Rectangle:
     def __init__(self, point1 : Point, point2 : Point):
-        self.point1 = point1
-        self.point2 = point2
-        
-    def get_position(self):
-        return (self.point1.position, self.point2.position)
+        self.p1 = point1
+        self.p2 = point2
     
-    def get_height(self):
-        return self.point2.y - self.point1.y
+    @property    
+    def position(self):
+        return (self.p1.position, self.p2.position)
+    @property
+    def height(self):
+        return self.p2.y - self.p1.y
     
     def fill(self,editor : Editor, material : str, y : int = None, xpadding : int = 0, zpadding : int = 0):
-        if self.point2.x - self.point1.x < 2*xpadding: xpadding = 0
-        if self.point2.z - self.point1.z < 2*zpadding: zpadding = 0
-        if y is None: y = self.point2.y
+        if self.p2.x - self.p1.x < 2*xpadding: xpadding = 0
+        if self.p2.z - self.p1.z < 2*zpadding: zpadding = 0
+        if y is None: y = self.p2.y
         
-        geometry.placeCuboid(editor, (self.point1.x+xpadding, 0, self.point1.z+zpadding), (self.point2.x-xpadding, y, self.point2.z-zpadding), Block(material))
+        geometry.placeCuboid(editor, (self.p1.x+xpadding, 0, self.p1.z+zpadding), (self.p2.x-xpadding, y, self.p2.z-zpadding), Block(material))
 
     def __repr__(self):
-        return f"{type(self).__name__}\n1 : {str(self.point1)},\n2 : {str(self.point2)}"
+        return f"{type(self).__name__}\n1 : {str(self.p1)},\n2 : {str(self.p2)}"

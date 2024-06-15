@@ -26,12 +26,12 @@ class Facade:
     def build(self, editor : Editor, materials : list[str]):  
         self.editor = editor
         self.materials = materials
-        points = sum([[vertice.point1, vertice.point2] for vertice in self.vertices], [])
+        points = sum([[vertice.p1, vertice.p2] for vertice in self.vertices], [])
                   
         for vertice in self.vertices:
             flip=(vertice.facing == DIRECTION.WEST or vertice.facing == DIRECTION.SOUTH, False, False)
             vertice.fill(editor, materials[0], self.height, xpadding = self.padding, zpadding = self.padding)
-            with editor.pushTransform(Transform(vertice.point1.position,rotation = vertice.facing.value, flip = flip)):
+            with editor.pushTransform(Transform(vertice.p1.position,rotation = vertice.facing.value, flip = flip)):
                 self.window.build(editor, materials)
                 if self.has_inter_floor: self.build_inter_floor()
                 if self.has_balcony: self.balcony.build(editor, materials)
@@ -40,10 +40,10 @@ class Facade:
     def correct_corners(self,points : list[Point], v : Vertice):
         if self.padding == 0:
             if self.window.border_radius != 0 and self.window.width == self.length:
-                if points.count(v.point1) >= 2:
+                if points.count(v.p1) >= 2:
                     self.editor.placeBlock((0,self.window.ypadding,0), Block(self.materials[8]))
                     self.editor.placeBlock((0,self.window.ypadding+self.window.height,0), Block(self.materials[8], {"type": "top"}))
-                if points.count(v.point2) >= 2:
+                if points.count(v.p2) >= 2:
                     self.editor.placeBlock((self.length-1,self.window.ypadding,0), Block(self.materials[8]))
                     self.editor.placeBlock((self.length-1,self.window.ypadding+self.window.height,0), Block(self.materials[8], {"type": "top"}))
             
@@ -54,9 +54,9 @@ class Facade:
                 elif self.inter_floor_border_style == INTER_FLOOR_BORDER.STAIRS:
                     material = Block(self.materials[4], {"facing": "south", "half": "top"})
                     
-                if points.count(v.point1) >= 2:
+                if points.count(v.p1) >= 2:
                     self.editor.placeBlock((-1,self.height,-1), material)
-                if points.count(v.point2) >= 2:
+                if points.count(v.p2) >= 2:
                     self.editor.placeBlock((self.length,self.height,-1), material)
                      
         
@@ -85,5 +85,5 @@ class Facade:
         return (self.rdata["inter_floor"]["proba"] >= rd.random(), select_random(self.rdata["inter_floor"]["border_style"], INTER_FLOOR_BORDER))
     
     def get_dimentions(self) -> tuple[int,int]:
-        return ( self.vertices[0].get_height(), len(self.vertices[0]))
+        return ( self.vertices[0].height, len(self.vertices[0]))
     

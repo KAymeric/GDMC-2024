@@ -46,7 +46,7 @@ class Entrance:
         
     def correct_vertices(self, vertices : list[Vertice]) -> list[Vertice]:
         for v in vertices:
-            v.point2.set_position(y=v.point2.y-1)
+            v.p2.y = v.p2.y-1
         return vertices
         
     def is_centered(self) -> bool:
@@ -57,16 +57,16 @@ class Entrance:
         door_vertice = None
         
         if self.is_centered:
-            oriented_vertices.sort(key = lambda v: v.point1.x if self.direction.value % 2 == 0 else v.point1.z) # if direction is north or south, sort by x, else sort by z
+            oriented_vertices.sort(key = lambda v: v.p1.x if self.direction.value % 2 == 0 else v.p1.z) # if direction is north or south, sort by x, else sort by z
             mid = len(oriented_vertices) // 2
             ver1, ver2 = oriented_vertices[mid], oriented_vertices[-mid-1]
             
-            if ver1.point1.x != ver2.point1.x and ver1.point1.z != ver2.point1.z:
+            if ver1.p1.x != ver2.p1.x and ver1.p1.z != ver2.p1.z:
                 door_vertice = rd.choice([ver1, ver2])
-            elif ver1.point1.position == ver2.point1.position:
+            elif ver1.p1.position == ver2.p1.position:
                 door_vertice = ver1
             else : 
-                door_vertice =  Vertice(ver2.point1.copy(), ver1.point2.copy())
+                door_vertice =  Vertice(ver2.p1.copy(), ver1.p2.copy())
             
         else: 
             door_vertice = rd.choice(oriented_vertices)
@@ -78,7 +78,7 @@ class Entrance:
         # Get all the vertice that can contain the door
         
         # if direction is north or south, compare by x, else compare by z
-        compare  = lambda v: (v.point1.z,v.point1.x) if self.direction.value % 2 == 0 else (v.point1.x,v.point1.z) 
+        compare  = lambda v: (v.p1.z,v.p1.x) if self.direction.value % 2 == 0 else (v.p1.x,v.p1.z) 
         # if direction is north or west, the most off_centered is the maximum, else it is the minimum
         off_centered = lambda p1,p2: max(p1,p2) if self.direction == DIRECTION.NORTH or self.direction == DIRECTION.WEST else min(p1,p2) 
         
@@ -98,7 +98,7 @@ class Entrance:
     
     def get_door_dimention(self) -> tuple[int,int,int,int]: # return width, height, padding, ypadding
         max_width = len(self.door_vertice) - 2
-        max_height = self.door_vertice.get_height() - 1
+        max_height = self.door_vertice.height - 1
         
         door_width = rd.randint(self.rdata["entrance"]["door"]["size"]["min_width"], self.rdata["entrance"]["door"]["size"]["max_width"])
         door_height = rd.randint(self.rdata["entrance"]["door"]["size"]["min_height"], self.rdata["entrance"]["door"]["size"]["max_height"])

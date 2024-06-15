@@ -29,8 +29,9 @@ class Tile:
         
     def fill(self, editor : Editor, material : str, y : int = 0) -> list[Point]:
         geometry.placeCuboid(editor, (self.pos.x, 0, self.pos.z), (self.pos.x+self.size-1, y, self.pos.z+self.size-1), Block(material))
-        
-    def get_neighbors_coords(self):
+    
+    @property   
+    def neighbors_coords(self):
         return [Point(x = self.pos.x, z = self.pos.z - self.size), # north
                 Point(x = self.pos.x + self.size, z = self.pos.z), # east
                 Point(x = self.pos.x, z = self.pos.z + self.size), # south
@@ -82,7 +83,7 @@ class Tile:
             
     def set_vertice(self, direction : DIRECTION, vertice : Vertice, height : int):
         self.has_vertice = True
-        vertice.point2.set_position(y = height)
+        vertice.p2.y = height
         match(direction):
             case DIRECTION.WEST :
                 self.west_vertice = vertice

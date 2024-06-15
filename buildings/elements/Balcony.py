@@ -34,33 +34,33 @@ class Balcony:
             self.build_border_radius(s)
             
     def build_rembard(self, s : Vertice):
-        geometry.placeCuboid(self.editor,(s.point1.x,1,-1),(s.point1.x,1,-self.length),Block(self.materials[3]))
-        geometry.placeCuboid(self.editor,(s.point2.x,1,-1),(s.point2.x,1,-self.length),Block(self.materials[3]))
-        geometry.placeCuboid(self.editor,(s.point1.x,1,-self.length),(s.point2.x,1,-self.length),Block(self.materials[3]))
+        geometry.placeCuboid(self.editor,(s.p1.x,1,-1),(s.p1.x,1,-self.length),Block(self.materials[3]))
+        geometry.placeCuboid(self.editor,(s.p2.x,1,-1),(s.p2.x,1,-self.length),Block(self.materials[3]))
+        geometry.placeCuboid(self.editor,(s.p1.x,1,-self.length),(s.p2.x,1,-self.length),Block(self.materials[3]))
         
     def build_details(self, s : Vertice):
         if not self.has_details: return
-        geometry.placeCuboid(self.editor,(s.point1.x,0,-1),(s.point1.x,0,-self.length),Block(self.materials[4], {"facing": "east", "half": "top"}))
-        geometry.placeCuboid(self.editor,(s.point2.x,0,-1),(s.point2.x,0,-self.length),Block(self.materials[4], {"facing": "west", "half": "top"}))
-        geometry.placeCuboid(self.editor,(s.point1.x,0,-self.length),(s.point2.x,0,-self.length),Block(self.materials[4], {"facing": "south", "half": "top"}))
+        geometry.placeCuboid(self.editor,(s.p1.x,0,-1),(s.p1.x,0,-self.length),Block(self.materials[4], {"facing": "east", "half": "top"}))
+        geometry.placeCuboid(self.editor,(s.p2.x,0,-1),(s.p2.x,0,-self.length),Block(self.materials[4], {"facing": "west", "half": "top"}))
+        geometry.placeCuboid(self.editor,(s.p1.x,0,-self.length),(s.p2.x,0,-self.length),Block(self.materials[4], {"facing": "south", "half": "top"}))
       
     def build_border_radius(self, s : Vertice):
         if self.border_radius == BALCONY_BORDER_RADIUS.NONE: return
         
-        geometry.placeCuboid(self.editor,(s.point1.x,0,-self.length),(s.point1.x,1,-self.length),Block("air"))
-        geometry.placeCuboid(self.editor,(s.point2.x,0,-self.length),(s.point2.x,1,-self.length),Block("air"))
-        self.editor.placeBlock((s.point1.x+1,1,-self.length+1), Block(self.materials[3]))
-        self.editor.placeBlock((s.point2.x-1,1,-self.length+1), Block(self.materials[3]))
+        geometry.placeCuboid(self.editor,(s.p1.x,0,-self.length),(s.p1.x,1,-self.length),Block("air"))
+        geometry.placeCuboid(self.editor,(s.p2.x,0,-self.length),(s.p2.x,1,-self.length),Block("air"))
+        self.editor.placeBlock((s.p1.x+1,1,-self.length+1), Block(self.materials[3]))
+        self.editor.placeBlock((s.p2.x-1,1,-self.length+1), Block(self.materials[3]))
         
         if self.has_details:
-            self.editor.placeBlock((s.point1.x,0,-self.length+1), Block(self.materials[4], {"facing": "south", "half": "top"}))
-            self.editor.placeBlock((s.point1.x+1,0,-self.length), Block(self.materials[4], {"facing": "east", "half": "top"}))
-            self.editor.placeBlock((s.point2.x,0,-self.length+1), Block(self.materials[4], {"facing": "south", "half": "top"}))
-            self.editor.placeBlock((s.point2.x-1,0,-self.length), Block(self.materials[4], {"facing": "west", "half": "top"}))
+            self.editor.placeBlock((s.p1.x,0,-self.length+1), Block(self.materials[4], {"facing": "south", "half": "top"}))
+            self.editor.placeBlock((s.p1.x+1,0,-self.length), Block(self.materials[4], {"facing": "east", "half": "top"}))
+            self.editor.placeBlock((s.p2.x,0,-self.length+1), Block(self.materials[4], {"facing": "south", "half": "top"}))
+            self.editor.placeBlock((s.p2.x-1,0,-self.length), Block(self.materials[4], {"facing": "west", "half": "top"}))
             
             if self.border_radius == BALCONY_BORDER_RADIUS.FULL:
-                self.editor.placeBlock((s.point1.x+1,0,-self.length+1), Block(self.materials[4], {"facing": "east", "half": "top"}))
-                self.editor.placeBlock((s.point2.x-1,0,-self.length+1), Block(self.materials[4], {"facing": "west", "half": "top"}))
+                self.editor.placeBlock((s.p1.x+1,0,-self.length+1), Block(self.materials[4], {"facing": "east", "half": "top"}))
+                self.editor.placeBlock((s.p2.x-1,0,-self.length+1), Block(self.materials[4], {"facing": "west", "half": "top"}))
         
     def get_structures(self) -> list[Vertice]:
         # structures are the base shape of the balcony

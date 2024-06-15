@@ -1,10 +1,10 @@
-from world_maker.world_maker import *
+# from world_maker.world_maker import *
 
-def main():
-    rectangle_house_mountain, rectangle_building, skeleton_highway, skeleton_mountain = world_maker()
+# def main():
+#     rectangle_house_mountain, rectangle_building, skeleton_highway, skeleton_mountain = world_maker()
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
     
 
 from gdpc import Editor, Block, geometry, Transform
@@ -29,7 +29,7 @@ y = YamlReader('params.yml')
 random_data = y.data
 
 #move your editor to the position you wanna build on
-transform = Transform((75,-60,110),rotation = 0)
+transform = Transform((105,-60,110),rotation = 0)
 editor.transform.push(transform)
 
 # clear the area you build on
