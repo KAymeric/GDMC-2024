@@ -31,6 +31,9 @@ class Point:
     def position(self, value : tuple[int,int,int]):
         self._x, self._y, self._z = value
         
+    def __eq__(self, other : 'Point') -> bool:
+        return self.position == other.position
+        
     def __repr__(self):
         return f"Point({self.position})"
     

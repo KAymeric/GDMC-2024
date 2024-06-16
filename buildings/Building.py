@@ -1,10 +1,10 @@
 import random as rd
 from utils.Enums import DIRECTION
 from gdpc import Editor, Block, geometry
-from buildings.Foundations import Foundations
-from buildings.Facade import Facade
-from buildings.Entrance import Entrance
-from buildings.Roof import Roof
+from buildings.elements.buildingSections.Foundations import Foundations
+from buildings.elements.buildingSections.Facade import Facade
+from buildings.elements.buildingSections.Entrance import Entrance
+from buildings.elements.buildingSections.Roof import Roof
 
 class Building:
     def __init__(self,rdata, positions : list[tuple[int,int,int]], matrice : list[list[int]], doors_direction : DIRECTION):

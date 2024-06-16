@@ -141,7 +141,7 @@ class Foundations:
         for index,collumn in enumerate(collumns):
             if index == len(collumns)-1: break
             for compare in  collumns[index+1:]:
-                if collumn.p1.position == compare.p1.position :
+                if collumn == compare :
                     if compare.is_outer : collumn.set_is_outer(True)
                     collumns.remove(compare)
                    

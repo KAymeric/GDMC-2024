@@ -2,7 +2,7 @@ import random as rd
 from gdpc import Editor, Block, geometry
 from utils.Enums import DIRECTION,COLLUMN_STYLE
 from buildings.geometry.Vertice import Vertice
-from buildings.Facade import Facade
+from buildings.elements.buildingSections.Facade import Facade
 
 class Entrance:
     def __init__(self, 
@@ -61,12 +61,12 @@ class Entrance:
             mid = len(oriented_vertices) // 2
             ver1, ver2 = oriented_vertices[mid], oriented_vertices[-mid-1]
             
-            if ver1.p1.x != ver2.p1.x and ver1.p1.z != ver2.p1.z:
-                door_vertice = rd.choice([ver1, ver2])
-            elif ver1.p1.position == ver2.p1.position:
+            if ver1.p1.x == ver2.p1.x or ver1.p1.z == ver2.p1.z:
+                door_vertice =  Vertice(ver2.p1.copy(), ver1.p2.copy())
+            elif ver1 == ver2:
                 door_vertice = ver1
             else : 
-                door_vertice =  Vertice(ver2.p1.copy(), ver1.p2.copy())
+                door_vertice = rd.choice([ver1, ver2])
             
         else: 
             door_vertice = rd.choice(oriented_vertices)

@@ -16,6 +16,9 @@ class Vertice(Rectangle):
             case DIRECTION.EAST | DIRECTION.WEST:
                 return [Point(x = self.p1.x, z = self.p1.z - 1), 
                         Point(x = self.p2.x, z = self.p2.z + 1)]
+                
+    def copy(self):
+        return Vertice(self.p1.copy(), self.p2.copy(), self.facing)
 
     def __len__(self):
         return self.p2.x - self.p1.x + self.p2.z - self.p1.z + 1

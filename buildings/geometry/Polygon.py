@@ -92,14 +92,14 @@ class Polygon:
     
     def _has_neighbor(self, target : Point, tiles : list[Tile]) -> bool|Tile:
         for tile in tiles:
-            if tile.pos.position == target.position:
+            if tile.pos == target:
                 return tile
         return False
     
     def _has_next(self, target : Point, facing : str, remaining_vertices : list[Vertice]) -> bool|Vertice:
         for vertice in remaining_vertices:
             if vertice.facing == facing:
-                if vertice.p1.position == target.position or vertice.p2.position == target.position:
+                if vertice.p1 == target or vertice.p2 == target:
                     remaining_vertices.remove(vertice)
                     return vertice
         return False
